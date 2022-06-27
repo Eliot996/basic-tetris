@@ -39,6 +39,15 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     const theTetrominoes = [lTetromino, skewTetromino, tTetromino, oTetromino, straightTetromino];
 
+    let currentPosition = 4;
+    let current = theTetrominoes[0][0];
 
-    console.log(squares)
+    //draw
+    function draw() {
+        current.forEach(index => {
+            squares[currentPosition + index].classList.add('tetromino');
+        })
+    }
+
+    draw()
 })
