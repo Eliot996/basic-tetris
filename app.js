@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [1,     width,   width+1, width+2],
         [1,     width+1, width+2, width*2+1],
         [width, width+1, width+2, width*2+1],
-        [1,     width,   width+1, width+3]
+        [1,     width,   width+1, width+2]
     ];
     const oTetromino = [
         [0, 1, width, width+1],
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.keyCode === 37) {
             moveLeft()
         } else if (e.keyCode === 38) {
-            //rotate
+            rotate()
         } else if (e.keyCode === 39) {
             moveRight()
         } else if (e.keyCode === 40) {
@@ -128,6 +128,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             draw()
         }
+    }
+
+    // rotate the tetromino
+    function rotate() {
+        undraw()
+
+        currentRotation++
+
+        if (theTetrominoes[random].length === currentRotation) {
+            currentRotation = 0;
+        }
+
+        current = theTetrominoes[random][currentRotation]
+
+        draw()
     }
 
 })
