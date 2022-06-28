@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
     let squares = Array.from(document.querySelectorAll('.grid div'));
     const ScoreDisplay = document.getElementById('score');
+    let score = 0;
     const startButton = document.getElementById('start-button');
     const width = 10;
 
@@ -79,10 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function moveDown() {
-        undraw()
-        currentPosition += 10
-        draw()
         freeze()
+        undraw()
+        currentPosition += width
+        draw()
     }
 
     // freeze function using some
@@ -96,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPosition = 4
             draw()
             displayTetromino()
+            addScore()
         }
     }
 
@@ -175,5 +177,26 @@ document.addEventListener('DOMContentLoaded', () => {
             displayTetromino()
         }
     })
+
+    //add score
+  function addScore() {
+    console.log('squares: ' + squares.length)
+        for (let i = 0; i < squares.length - 11; i += width) {
+            const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9]
+
+            if(row.every(index => squares[index].classList.contains('taken'))) {
+            score += 10
+            ScoreDisplay.innerHTML = score
+            row.forEach(index => {
+                  squares[index].classList.remove('taken')
+                  squares[index].classList.remove('tetromino')
+                  squares[index].style.backgroundColor = ''
+            })
+            const squaresRemoved = squares.splice(i, width)
+            squares = squaresRemoved.concat(squares)
+            squares.forEach(cell => grid.appendChild(cell))
+      }
+    }
+  }
 
 })
