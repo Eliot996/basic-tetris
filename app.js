@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
             draw()
             displayTetromino()
             addScore()
+            gameOver()
         }
     }
 
@@ -197,6 +198,13 @@ document.addEventListener('DOMContentLoaded', () => {
             squares.forEach(cell => grid.appendChild(cell))
       }
     }
+  }
+
+  function gameOver() {
+        if (current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
+            clearInterval(timerId)
+            ScoreDisplay.innerHTML = "game over - final score: " + score
+      }
   }
 
 })
