@@ -63,13 +63,28 @@ document.addEventListener('DOMContentLoaded', () => {
     draw()
 
     //timer
-    timerId = setInterval(moveDown, 1000)
+    let timerId = setInterval(moveDown, 1000)
+
+    // assign functions to handle key presses
+    function control(e) {
+        if (e.keyCode === 37) {
+            moveLeft()
+        } else if (e.keyCode === 38) {
+            //rotate
+        } else if (e.keyCode === 39) {
+            moveRight()
+        } else if (e.keyCode === 40) {
+            moveDown()
+        }
+    }
+    document.addEventListener('keydown', control)
+
 
     function moveDown() {
+        freeze()
         undraw()
         currentPosition += 10
         draw()
-        freeze()
     }
 
     // freeze function using some
@@ -84,6 +99,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    //
+    // make the left movement and stop at edge and other tetrominoes
+    function moveLeft() {
+        undraw()
+
+        const isAtLeftEdge = current.some(index => (currentPosition + index) % width === 0)
+        const isBlocked = current.some(index => squares[currentPosition + index - 1].classList.contains('taken'))
+
+        if(!(isAtLeftEdge || isBlocked)) currentPosition -=1
+
+        if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
+            console.log('hit')
+            currentPosition +=1
+        }
+
+        draw()
+    }
+
+    // make the right movement and stop at edge and other tetrominoes
+    function moveRight() {
+        const isAtEdge = current.some(index => (currentPosition + index) % width === width - 1)
+        const isBlocked = current.some(index => squares[currentPosition + index + 1].classList.contains('taken'))
+
+        if(!(isAtEdge || isBlocked)){
+            undraw()
+
+            currentPosition += 1;
+
+            draw()
+        }
+    }
 
 })
