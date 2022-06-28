@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [1,     width,   width+1, width+2],
         [1,     width+1, width+2, width*2+1],
         [width, width+1, width+2, width*2+1],
-        [1,     width,   width+1, width+2]
+        [1,     width,   width+1, width*2+1]
     ];
     const oTetromino = [
         [0, 1, width, width+1],
@@ -81,10 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function moveDown() {
-        freeze()
         undraw()
         currentPosition += 10
         draw()
+        freeze()
     }
 
     // freeze function using some
